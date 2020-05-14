@@ -15,38 +15,35 @@ jobs:
 
       - name: Prepare key
         run: |
-          mkdir -p ~/.ssh
-          echo $LUSTAPO_DATA_SSH > ~/.ssh/lustapo-data.deploy.pem
-
-          cat <<EOT > ~/.ssh/config
-          Host lustapo-data
-            Hostname github.com
-            IdentityFile ~/.ssh/lustapo-data.deploy.pem
-          EOT
+          sh .github/scripts/prepare.sh "$LUSTAPO_DATA_SSH"
 
       - name: Clone data repository
-        run: |
-          git config user.name 'Igor'
-          git config user.email 'igor.bot@users.noreply.github.com'
-
-          git clone git@github.com:rzeszot/lustapo-data.git data
+        uses: actions/checkout@v2
+        with:
+          repository: rzeszot/lustapo-data
+          path: data
 
       - name: Run
-        run: swift run
+        run: |
+          date > data/test.md
+          # swift run
 
       - name: Save
         run: |
           cd data
 
-          git remote set-url origin git@lustapo-data:rzeszot/lustapo-data.git
+          git remote set-url origin git@upstream:rzeszot/lustapo-data.git
+
+          git config user.name 'Igor'
+          git config user.email 'igor.bot@users.noreply.github.com'
 
           NOW=`date +"%F %H:%M"`
           git add -A
           git commit -m "[UMCS] ${NOW}"
 
-          git push origin master
+          git push origin HEAD:master
 
 
       - name: Clean
         run: |
-          rm ~/.ssh/lustapo-data.deploy.pem
+          rm -f ~/.ssh/lustapo_rsa ~/.ssh/config
