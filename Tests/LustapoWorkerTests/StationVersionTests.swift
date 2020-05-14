@@ -3,6 +3,8 @@ import XCTest
 
 final class StationVersionTests: XCTestCase {
 
+    // MARK: -
+
     func testVersionParsingV0() throws {
         let json = """
                 "0"
