@@ -48,7 +48,7 @@ func fix(_ data: Data) -> Data? {
     return result.data(using: String.Encoding.utf8.rawValue)
 }
 
-let file = URL(fileURLWithPath: "Data/stations.json")
+let file = URL(fileURLWithPath: "stations.json")
 let stations = try JSONDecoder().decode([Station].self, from: Data(contentsOf: file))
 
 for station in stations {
@@ -69,7 +69,7 @@ for station in stations {
 
         let content = try encoder.encode(Output(station: station.id, data: payload))
 
-        let output = URL(fileURLWithPath: "Data/umcs/\(station.id)/\(filename(station: station, date: payload.date))")
+        let output = URL(fileURLWithPath: "data/umcs/\(station.id)/\(filename(station: station, date: payload.date))")
         try FileManager.default.createDirectory(at: output.deletingLastPathComponent(), withIntermediateDirectories: true)
 
 
