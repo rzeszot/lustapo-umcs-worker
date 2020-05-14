@@ -1,0 +1,3 @@
+import LustapoWorker
+
+print("sxasd")
