@@ -64,7 +64,7 @@ for station in stations {
         let payload = try decoder.decode(Payload.self, from: fix(data)!)
 
         let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         encoder.dateEncodingStrategy = .fallback
 
         let content = try encoder.encode(Output(station: station.id, data: payload))
