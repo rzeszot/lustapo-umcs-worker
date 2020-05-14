@@ -87,16 +87,6 @@
         }
     },
     {
-        "id": "12",
-        "version": "2",
-        "name": "Florianka",
-        "coordinates": {
-            "latitude": 50.55480315812361,
-            "longitude": 22.98815095906265
-        }
-    },
-
-    {
         "id": "19",
         "name": "PGK Lubartów",
         "coordinates": {
