@@ -20,6 +20,12 @@ jobs:
         run: |
           echo $LUSTAPO_DATA_SSH > ~/.ssh/lustapo-data.deploy.pem
 
+          cat <<EOT > ~/.ssh/config
+          Host lustapo-data
+            Hostname github.com
+            IdentityFile ~/.ssh/lustapo-data.deploy.pem
+          EOT
+
       - name: Clean
         run: |
           rm ~/.ssh/lustapo-data.deploy.pem
