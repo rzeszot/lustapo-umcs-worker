@@ -2,7 +2,8 @@
 
 cd data
 
-git remote set-url origin git@upstream:rzeszot/lustapo-data.git
+git init
+git remote add origin git@upstream:rzeszot/lustapo-data.git
 git config user.name 'Igor'
 git config user.email 'igor.bot@users.noreply.github.com'
 

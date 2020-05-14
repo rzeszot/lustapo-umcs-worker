@@ -18,12 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Clone data repository
-        uses: actions/checkout@v2
-        with:
-          repository: rzeszot/lustapo-data
-          path: data
-
       - name: Prepare
         run: sh .github/scripts/prepare.sh
 
