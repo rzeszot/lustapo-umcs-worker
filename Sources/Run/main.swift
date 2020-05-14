@@ -1,5 +1,6 @@
 import Foundation
 import LustapoWorker
+import FoundationNetworking
 
 struct Output: Encodable {
     let station: String
