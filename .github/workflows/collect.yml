@@ -1,8 +1,6 @@
 name: Collect
 
 on:
-  schedule:
-    - cron: "*/10 * * * *"
   push:
     branches:
       - master
@@ -17,3 +15,11 @@ jobs:
 
       - name: Run
         run: swift run
+
+      - name: Prepare key
+        run: |
+          echo $LUSTAPO_DATA_SSH > ~/.ssh/lustapo-data.deploy.pem
+
+      - name: Clean
+        run: |
+          rm ~/.ssh/lustapo-data.deploy.pem
