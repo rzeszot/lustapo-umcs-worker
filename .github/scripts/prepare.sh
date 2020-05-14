@@ -1,12 +1,10 @@
 #!/bin/sh
 
-PRIVATE_KEY="${1}"
-
-#
-
 mkdir -p "${HOME}/.ssh"
-echo "${PRIVATE_KEY}" > "${HOME}/.ssh/lustapo_rsa"
-chmod 400 "${HOME}/.ssh/lustapo_rsa"
+
+echo "${DEPLOY_KEY}" > "${HOME}/.ssh/deploy_rsa"
+
+chmod 400 "${HOME}/.ssh/deploy_rsa"
 
 cat <<EOT > "${HOME}/.ssh/config"
 Host *
@@ -14,6 +12,7 @@ Host *
 
 Host upstream
   Hostname github.com
-  IdentityFile ~/.ssh/lustapo_rsa
+  IdentityFile ~/.ssh/deploy_rsa
 EOT
+
 chmod 644 "${HOME}/.ssh/config"

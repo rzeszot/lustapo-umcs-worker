@@ -1,12 +1,14 @@
 name: Collect
 
 on:
+  schedule:
+     - cron: "*/10 * * * *"
   push:
     branches:
       - master
 
 env:
-  LUSTAPO_DATA_SSH: ${{ secrets.LUSTAPO_DATA_SSH }}
+  DEPLOY_KEY: ${{ secrets.LUSTAPO_DATA_SSH }}
 
 jobs:
   umcs:
@@ -16,37 +18,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Prepare key
-        run: |
-          sh .github/scripts/prepare.sh "$LUSTAPO_DATA_SSH"
-
       - name: Clone data repository
         uses: actions/checkout@v2
         with:
           repository: rzeszot/lustapo-data
           path: data
 
+      - name: Prepare
+        run: sh .github/scripts/prepare.sh
+
       - name: Run
-        run: |
-          date > data/test.md
-          # swift run
+        run: swift run
 
       - name: Save
-        run: |
-          cd data
-
-          git remote set-url origin git@upstream:rzeszot/lustapo-data.git
-
-          git config user.name 'Igor'
-          git config user.email 'igor.bot@users.noreply.github.com'
-
-          NOW=`date +"%F %H:%M"`
-          git add -A
-          git commit -m "[UMCS] ${NOW}"
-
-          git push origin HEAD:master
-
+        run: sh .github/scripts/commit.sh
 
       - name: Clean
-        run: |
-          rm -f ~/.ssh/lustapo_rsa ~/.ssh/config
+        run: sh .github/scripts/clean.sh
