@@ -32,7 +32,7 @@ extension Date {
 func filename(station: Station, date: Date) -> String {
     return [
         date.format("yyyy-MM-dd"),
-        "umcs_\(station.id)_\(date.format("yyyy-MM-dd_HH:mm")).json"
+        "umcs_\(station.id)_\(date.format("yyyy-MM-dd-HH-mm")).json"
     ].joined(separator: "/")
 }
 
@@ -51,23 +51,30 @@ let stations = try JSONDecoder().decode([Station].self, from: Data(contentsOf: f
 let session = URLSession.shared
 
 for station in stations {
-    let url = URL(station: station)
-    let data = try! Data(contentsOf: url)
+    do {
+        print(" > \(station.name)")
 
-    let decoder = JSONDecoder()
-    decoder.dateDecodingStrategy = .formatted(.remote)
+        let url = URL(station: station)
+        let data = try Data(contentsOf: url)
 
-    let payload = try! decoder.decode(Payload.self, from: fix(data)!)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(.remote)
 
-    let encoder = JSONEncoder()
-    encoder.outputFormatting = .prettyPrinted
-    encoder.dateEncodingStrategy = .fallback
+        let payload = try decoder.decode(Payload.self, from: fix(data)!)
 
-    let content = try encoder.encode(Output(station: station.id, data: payload))
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        encoder.dateEncodingStrategy = .fallback
 
-    let output = URL(fileURLWithPath: "Data/umcs/\(station.id)/\(filename(station: station, date: payload.date))")
-    try FileManager.default.createDirectory(at: output.deletingLastPathComponent(), withIntermediateDirectories: true)
+        let content = try encoder.encode(Output(station: station.id, data: payload))
+
+        let output = URL(fileURLWithPath: "Data/umcs/\(station.id)/\(filename(station: station, date: payload.date))")
+        try FileManager.default.createDirectory(at: output.deletingLastPathComponent(), withIntermediateDirectories: true)
 
 
-    try! content.write(to: output)
+        try content.write(to: output)
+
+    } catch {
+        print("error \(error)")
+    }
 }
