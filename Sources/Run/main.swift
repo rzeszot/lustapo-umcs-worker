@@ -24,6 +24,7 @@ extension JSONEncoder.DateEncodingStrategy {
 extension Date {
     func format(_ format: String) -> String {
         let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
         formatter.dateFormat = format
         return formatter.string(from: self)
     }
