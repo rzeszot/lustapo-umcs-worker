@@ -37,7 +37,7 @@ final class URLTests: XCTestCase {
         ("testStationURLv0", testStationURLv0),
         ("testStationURLv2", testStationURLv2),
         ("testBaseURLv0", testBaseURLv0),
-        ("testBaseURLv2", testBaseURLv2),
+        ("testBaseURLv2", testBaseURLv2)
     ]
 
 }
