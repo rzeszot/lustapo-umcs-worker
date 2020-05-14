@@ -15,8 +15,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout worker
         uses: actions/checkout@v2
+
+      - name: Checkout data
+        uses: actions/checkout@v2
+        with:
+          repository: rzeszot/lustapo-data
+          path: data
 
       - name: Prepare
         run: sh .github/scripts/prepare.sh
