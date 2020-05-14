@@ -48,7 +48,6 @@ func fix(_ data: Data) -> Data? {
 
 let file = URL(fileURLWithPath: "Data/stations.json")
 let stations = try JSONDecoder().decode([Station].self, from: Data(contentsOf: file))
-let session = URLSession.shared
 
 for station in stations {
     do {
