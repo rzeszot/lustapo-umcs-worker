@@ -76,6 +76,6 @@ for station in stations {
         try content.write(to: output)
 
     } catch {
-        print("error \(error)")
+        print("::error file=Sources/Run/main.swift,line=79::\(error)")
     }
 }
